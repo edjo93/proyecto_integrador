@@ -87,12 +87,6 @@ public class NewJFrame extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("password");
 
-        textField_nombreBD_mysql.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField_nombreBD_mysqlActionPerformed(evt);
-            }
-        });
-
         boton_probarMysql.setText("probar");
         boton_probarMysql.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,7 +121,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,7 +210,7 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(59, 59, 59)
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -277,11 +271,6 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jButton2.setText("jButton2");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
         jLabel1.setText("MYSQL- SQL SERVER INTEGRATOR ");
@@ -329,10 +318,6 @@ public class NewJFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_botonConfiguracionActionPerformed
-
-    private void textField_nombreBD_mysqlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField_nombreBD_mysqlActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_textField_nombreBD_mysqlActionPerformed
 
     private void boton_probarMysqlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_probarMysqlActionPerformed
         // TODO add your handling code here:
@@ -393,12 +378,6 @@ public class NewJFrame extends javax.swing.JFrame {
             textField_mostrarMnsj_afterTest_sqlserver.setText("connection failed");
         }
     }//GEN-LAST:event_boton_probarSqlServerActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        System.out.println("holaa");
-        System.out.println("hello world");
-    }//GEN-LAST:event_jButton2ActionPerformed
     
        
         
