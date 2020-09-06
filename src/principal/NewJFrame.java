@@ -5,6 +5,8 @@
  */
 package principal;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author pc
@@ -270,6 +272,7 @@ public class NewJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         botonConfiguracion.setText("configuracion");
+        botonConfiguracion.setEnabled(false);
         botonConfiguracion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonConfiguracionActionPerformed(evt);
@@ -277,6 +280,12 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jButton2.setText("jButton2");
+        jButton2.setEnabled(false);
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
         jLabel1.setText("MYSQL- SQL SERVER INTEGRATOR ");
@@ -388,6 +397,12 @@ public class NewJFrame extends javax.swing.JFrame {
             textField_mostrarMnsj_afterTest_sqlserver.setText("connection failed");
         }
     }//GEN-LAST:event_boton_probarSqlServerActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        jButton2.setEnabled(false);
+        JOptionPane.showMessageDialog(this, "holaaaaaaaa");
+    }//GEN-LAST:event_jButton2MouseClicked
     
        
         
