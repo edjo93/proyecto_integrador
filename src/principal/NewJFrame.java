@@ -277,6 +277,11 @@ public class NewJFrame extends javax.swing.JFrame {
         });
 
         jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
         jLabel1.setText("MYSQL- SQL SERVER INTEGRATOR ");
@@ -388,6 +393,11 @@ public class NewJFrame extends javax.swing.JFrame {
             textField_mostrarMnsj_afterTest_sqlserver.setText("connection failed");
         }
     }//GEN-LAST:event_boton_probarSqlServerActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        System.out.println("holaa");
+    }//GEN-LAST:event_jButton2ActionPerformed
     
        
         
