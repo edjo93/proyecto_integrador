@@ -5,6 +5,14 @@
  */
 package principal;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author pc
@@ -13,6 +21,10 @@ public class NewJFrame extends javax.swing.JFrame {
     boolean respuestaMysql;
     boolean respuestaSqlserver;
             
+    ConexMysql conexion_from_probar_mysql;
+    ConexServer conexion_from_probar_sqlserver;
+    
+    ConexMysql conexion2_from_probar_mysql; // conexion a bitacora de replicacion
     
     
     /**
@@ -48,6 +60,7 @@ public class NewJFrame extends javax.swing.JFrame {
         textField_password_mysql = new javax.swing.JTextField();
         boton_probarMysql = new javax.swing.JButton();
         textField_mostrarMnsj_afterTest_mysql = new javax.swing.JLabel();
+        boton_recent_mysql = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -62,8 +75,19 @@ public class NewJFrame extends javax.swing.JFrame {
         textField_password_sqlserver = new javax.swing.JTextField();
         boton_probarSqlServer = new javax.swing.JButton();
         textField_mostrarMnsj_afterTest_sqlserver = new javax.swing.JLabel();
-        botonConfiguracion = new javax.swing.JButton();
+        boton_recent_sqlserver = new javax.swing.JButton();
+        jdialog_botonReplicar = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        mysqlShowTables = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        sqlserverShowTables = new javax.swing.JTable();
+        boton_mover_a_tabla_sqlserver = new java.awt.Button();
+        boton_quitar_de_sqlserver = new java.awt.Button();
+        jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        label_informacion_job = new javax.swing.JLabel();
+        botonConfiguracion = new javax.swing.JButton();
+        botonReplicar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
@@ -94,6 +118,13 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        boton_recent_mysql.setText("recent");
+        boton_recent_mysql.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_recent_mysqlActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -101,15 +132,19 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(boton_probarMysql, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(66, 66, 66)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel5)
+                                .addComponent(jLabel6)
+                                .addComponent(jLabel7))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(boton_recent_mysql, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(boton_probarMysql)))
                         .addGap(34, 34, 34)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(textField_nombreUsuario_mysql, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
@@ -150,9 +185,11 @@ public class NewJFrame extends javax.swing.JFrame {
                     .addComponent(textField_password_mysql, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(boton_probarMysql, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(boton_probarMysql, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(boton_recent_mysql))
                     .addComponent(textField_mostrarMnsj_afterTest_mysql, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(102, 102, 255));
@@ -183,6 +220,13 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        boton_recent_sqlserver.setText("recent");
+        boton_recent_sqlserver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_recent_sqlserverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -190,15 +234,19 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(80, 80, 80)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13)
-                            .addComponent(boton_probarSqlServer, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addGap(66, 66, 66)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jLabel11)
+                                .addComponent(jLabel12)
+                                .addComponent(jLabel13))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(boton_recent_sqlserver, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(boton_probarSqlServer)))
                         .addGap(34, 34, 34)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(textField_password_sqlserver, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
@@ -238,9 +286,11 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13)
                     .addComponent(textField_password_sqlserver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(boton_probarSqlServer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(boton_probarSqlServer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(boton_recent_sqlserver))
                     .addComponent(textField_mostrarMnsj_afterTest_sqlserver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(49, 49, 49))
         );
@@ -256,10 +306,119 @@ public class NewJFrame extends javax.swing.JFrame {
             jdialog_botonConfiguracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdialog_botonConfiguracionLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jdialog_botonReplicar.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                jdialog_botonReplicarComponentHidden(evt);
+            }
+        });
+
+        mysqlShowTables.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "mysql tables"
+            }
+        ));
+        jScrollPane1.setViewportView(mysqlShowTables);
+
+        sqlserverShowTables.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "sqlserver tables"
+            }
+        ));
+        jScrollPane2.setViewportView(sqlserverShowTables);
+
+        boton_mover_a_tabla_sqlserver.setLabel(">>");
+        boton_mover_a_tabla_sqlserver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_mover_a_tabla_sqlserverActionPerformed(evt);
+            }
+        });
+
+        boton_quitar_de_sqlserver.setLabel("<<");
+        boton_quitar_de_sqlserver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                boton_quitar_de_sqlserverActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("job");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("testing sqlserver table");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        label_informacion_job.setText("last job: ");
+
+        javax.swing.GroupLayout jdialog_botonReplicarLayout = new javax.swing.GroupLayout(jdialog_botonReplicar.getContentPane());
+        jdialog_botonReplicar.getContentPane().setLayout(jdialog_botonReplicarLayout);
+        jdialog_botonReplicarLayout.setHorizontalGroup(
+            jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
+                .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(91, 91, 91)
+                        .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(boton_quitar_de_sqlserver, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                            .addComponent(boton_mover_a_tabla_sqlserver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(jButton1)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton2)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+            .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
+                .addGap(157, 157, 157)
+                .addComponent(label_informacion_job, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jdialog_botonReplicarLayout.setVerticalGroup(
+            jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
+                .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
+                        .addGap(133, 133, 133)
+                        .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(boton_mover_a_tabla_sqlserver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(55, 55, 55)
+                        .addComponent(boton_quitar_de_sqlserver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(label_informacion_job, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
+        );
+
+        boton_mover_a_tabla_sqlserver.getAccessibleContext().setAccessibleName("");
+
+        jdialog_botonReplicar.getAccessibleContext().setAccessibleName(">>");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -270,7 +429,12 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("jButton2");
+        botonReplicar.setText("replicar");
+        botonReplicar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonReplicarActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 2, 13)); // NOI18N
         jLabel1.setText("MYSQL- SQL SERVER INTEGRATOR ");
@@ -285,7 +449,7 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addGap(123, 123, 123)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(botonConfiguracion, javax.swing.GroupLayout.DEFAULT_SIZE, 160, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addComponent(botonReplicar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(107, 107, 107)
                         .addComponent(jLabel1)))
@@ -299,7 +463,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addGap(36, 36, 36)
                 .addComponent(botonConfiguracion)
                 .addGap(87, 87, 87)
-                .addComponent(jButton2)
+                .addComponent(botonReplicar)
                 .addContainerGap(189, Short.MAX_VALUE))
         );
 
@@ -334,13 +498,30 @@ public class NewJFrame extends javax.swing.JFrame {
         nombreUsuario=nombreUsuario.trim();
         password=password.trim();
         
-        ConexMysql conexion_from_probar_mysql = new ConexMysql(nombreInstancia, nombreBD, puerto, nombreUsuario, password);
+        conexion_from_probar_mysql = new ConexMysql(nombreInstancia, nombreBD, puerto, nombreUsuario, password);
         
         respuestaMysql=conexion_from_probar_mysql.probarConexion();
         
         if (respuestaMysql) {
             //actualizar el jtextfield
             textField_mostrarMnsj_afterTest_mysql.setText("success on connection");
+            
+            try {
+                //guardar una nueva conexion
+                PreparedStatement ps = conexion_from_probar_mysql.con.prepareStatement("insert into "
+                        + "CONNECTIONS_BIT (nombre_instancia,nombre_bd, puerto,user,password)  "
+                        + "values('"+nombreInstancia+"','"+nombreBD+"','"+puerto+"','"+nombreUsuario+"','"+password+"');");
+                
+                ps.executeUpdate("insert into "
+                        + "CONNECTIONS_BIT (nombre_instancia,nombre_bd, puerto,user,password)  "
+                        + "values('"+nombreInstancia+"','"+nombreBD+"','"+puerto+"','"+nombreUsuario+"','"+password+"');");
+                
+                
+                        
+            } catch (SQLException ex) {
+                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+                    
             
         }else{
             //actualizar el jtextfield
@@ -365,7 +546,7 @@ public class NewJFrame extends javax.swing.JFrame {
         password=password.trim();
         
                
-        ConexServer conexion_from_probar_sqlserver = new ConexServer(nombreInstancia, nombreBD, puerto, nombreUsuario, password);
+        conexion_from_probar_sqlserver = new ConexServer(nombreInstancia, nombreBD, puerto, nombreUsuario, password);
         
         respuestaSqlserver=conexion_from_probar_sqlserver.probarConexion();
         
@@ -373,11 +554,320 @@ public class NewJFrame extends javax.swing.JFrame {
             //actualizar el jtextfield
             textField_mostrarMnsj_afterTest_sqlserver.setText("success on connection");
             
+            
+            try {
+                //guardar una nueva conexion sqlserver
+                
+                PreparedStatement ps = conexion_from_probar_mysql.con.prepareStatement("insert into "
+                        + "CONNECTIONS_SQLSERVER_BIT (nombre_instancia,nombre_bd, puerto,user,password)  "
+                        + "values('"+nombreInstancia+"','"+nombreBD+"','"+puerto+"','"+nombreUsuario+"','"+password+"');");
+                
+                ps.executeUpdate("insert into "
+                        + "CONNECTIONS_SQLSERVER_BIT (nombre_instancia,nombre_bd, puerto,user,password)  "
+                        + "values('"+nombreInstancia+"','"+nombreBD+"','"+puerto+"','"+nombreUsuario+"','"+password+"');");
+                
+                
+                        
+            } catch (SQLException ex) {
+                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+            
+            
+            
         }else{
             //actualizar el jtextfield
             textField_mostrarMnsj_afterTest_sqlserver.setText("connection failed");
         }
     }//GEN-LAST:event_boton_probarSqlServerActionPerformed
+
+    private void botonReplicarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonReplicarActionPerformed
+        //cargar el dialog 
+        jdialog_botonReplicar.setVisible(true);
+        jdialog_botonReplicar.pack();
+        jdialog_botonReplicar.setLocationRelativeTo(this);
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.setColumnIdentifiers(new Object[]{"Mysql tables"});
+        
+        //para sqlserver 
+        DefaultTableModel modelo2 = new DefaultTableModel();
+        modelo2.setColumnIdentifiers(new Object[]{"sqlserver tables"});
+        
+        
+        //actualizar informacion del job
+        //paste
+        PreparedStatement psJob;
+        try {
+            psJob = conexion_from_probar_mysql.con.prepareStatement("select max(fecha) fechaMaxima from JOB_BIT");
+            ResultSet rsJob = psJob.executeQuery("select max(fecha) fechaMaxima from JOB_BIT");
+
+            //obtener el log mas reciente
+            String lastFecha = null ;
+            while (rsJob.next()) {
+                lastFecha= rsJob.getString("fechaMaxima");
+            }
+            
+            
+                
+            
+            if (lastFecha==null) {
+                //no records
+                //actualizar jobLabel con no records
+                label_informacion_job.setText("last job: no records");
+            }else{
+                //actualizar jobLabel con ultimo log
+                label_informacion_job.setText("last job: "+lastFecha);
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+                
+        
+        
+        try {
+            
+                       
+            //listado de las tablas
+            //show full tables from projectmysql
+            PreparedStatement ps = conexion_from_probar_mysql.con.prepareStatement("show tables from projectmysql like '_NB' ");
+            ResultSet rs=ps.executeQuery("show tables from projectmysql like '%_NB'");
+            
+            while (rs.next()) {
+                modelo.addRow(new Object[]{rs.getString("Tables_in_projectmysql (%_NB)")});
+            }
+            mysqlShowTables.setModel(modelo);
+            
+            } catch (SQLException ex) {
+                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        
+            
+        
+    }//GEN-LAST:event_botonReplicarActionPerformed
+
+    private void boton_mover_a_tabla_sqlserverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_mover_a_tabla_sqlserverActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel modelo= (DefaultTableModel)mysqlShowTables.getModel();
+        int posRow = mysqlShowTables.getSelectedRow();
+        int posColumn =mysqlShowTables.getSelectedColumn();
+        
+        Object valueFromMysql=modelo.getValueAt(posRow, posColumn);
+        
+        //para actualizar modelo en jtable sqlserver
+        DefaultTableModel modelo2= (DefaultTableModel)sqlserverShowTables.getModel();
+        modelo2.addRow(new Object[]{valueFromMysql.toString()});
+        sqlserverShowTables.setModel(modelo2);
+        
+        modelo.removeRow(posRow);
+        
+               
+                
+    }//GEN-LAST:event_boton_mover_a_tabla_sqlserverActionPerformed
+
+    private void boton_recent_mysqlActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_recent_mysqlActionPerformed
+        // TODO add your handling code here:
+        textField_nombreInstancia_mysql.setText("msqldb.cdvj4u1rep19.us-east-1.rds.amazonaws.com");
+        textField_nombreBD_mysql.setText("projectmysql");
+        textField_puerto_mysql.setText("3306");
+        textField_nombreUsuario_mysql.setText("admin");
+        textField_password_mysql.setText("adminmsql");
+    }//GEN-LAST:event_boton_recent_mysqlActionPerformed
+
+    private void boton_quitar_de_sqlserverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_quitar_de_sqlserverActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel modelo= (DefaultTableModel)sqlserverShowTables.getModel();
+        int posRow = sqlserverShowTables.getSelectedRow();
+        int posColumn =sqlserverShowTables.getSelectedColumn();
+        
+        Object valueFromMysql=modelo.getValueAt(posRow, posColumn);
+        
+        //para actualizar modelo en jtable sqlserver
+        DefaultTableModel modelo2= (DefaultTableModel)mysqlShowTables.getModel();
+        modelo2.addRow(new Object[]{valueFromMysql.toString()});
+        mysqlShowTables.setModel(modelo2);
+        
+        modelo.removeRow(posRow);
+        
+        
+    }//GEN-LAST:event_boton_quitar_de_sqlserverActionPerformed
+
+    private void jdialog_botonReplicarComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jdialog_botonReplicarComponentHidden
+        // TODO add your handling code here:
+        
+        //clean sqlserver table
+        DefaultTableModel modelo3= (DefaultTableModel)sqlserverShowTables.getModel();
+        modelo3.setRowCount(0);
+        
+        
+    }//GEN-LAST:event_jdialog_botonReplicarComponentHidden
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        for (int i = 0; i < sqlserverShowTables.getRowCount(); i++) {// todas las tablas para replicar
+            
+            String current= sqlserverShowTables.getValueAt(i, 0).toString();
+            int index_of_=current.indexOf("_");
+            current=current.substring(0,index_of_);//obtenemos el identificador general de la tabla POR EJM: CLIENTES_BIT , CLIENTES_NB OBTENEMOS CLIENTES 
+            
+            
+            try {
+                // TODO add your handling code here:
+                //solicitar el ultimo log
+                
+                
+                //requerir conexiones
+                PreparedStatement psJob = conexion_from_probar_mysql.con.prepareStatement("select max(fecha) fechaMaxima from JOB_BIT where tabla ='"+current+"'");
+                ResultSet rsJob = psJob.executeQuery("select max(fecha) fechaMaxima from JOB_BIT where tabla ='"+current+"'");
+
+                //obtener el log mas reciente
+                //obtener el log mas reciente
+                String lastFecha = null;
+                while (rsJob.next()) {
+                    lastFecha= rsJob.getString("fechaMaxima");
+                }
+                
+                
+                PreparedStatement pss;
+                ResultSet rss;
+                if (lastFecha==null) {
+                    //ejecutar replicacion desde cero
+                    pss = conexion_from_probar_mysql.con.prepareStatement("select * from "+current+"_BIT");
+                    rss = pss.executeQuery("select * from "+current+"_BIT");
+                }else{
+                    //ejecutar replicacion desde un punto de control
+                    
+                    pss = conexion_from_probar_mysql.con.prepareStatement("select * from "+current+"_BIT "+" where fecha > '"+lastFecha+"'");//solo queremos actualizar datos desde la ultima replicacion
+                    rss = pss.executeQuery("select * from "+current+"_BIT "+" where fecha > '"+lastFecha+"'");
+                    
+                }
+                
+                
+                
+
+                while (rss.next()) {
+
+                    String accion = rss.getString("accion");
+
+                    if (accion.equals("insert")) {
+                        //conexion con sql server
+                        String id=rss.getString("nuevo_id");
+                        String nombre=rss.getString("nuevo_nombre");
+                        Statement ps2 = conexion_from_probar_sqlserver.conServer.createStatement();
+
+                        ps2.executeUpdate("insert into "+current+"_NB (id,nombre) "
+                                + "values ("+id+",'"+nombre+"');");
+
+
+
+                    }else if (accion.equals("update")){
+                        String id =rss.getString("nuevo_id");
+                        String nombre=rss.getString("nuevo_nombre");
+                        Statement ps2 = conexion_from_probar_sqlserver.conServer.createStatement();
+
+                        //update element
+                        ps2.executeUpdate("update "+current+"_NB set nombre='"+nombre+"'"+" where id="+id);
+
+                    }else{
+                        String id =rss.getString("nuevo_id");
+                        Statement ps2 = conexion_from_probar_sqlserver.conServer.createStatement();
+                        //delete element
+                        ps2.executeUpdate("delete from "+current+"_NB where id="+id);
+
+                    }
+
+
+                }
+                //el job se hizo correctamente
+                pss = conexion_from_probar_mysql.con.prepareStatement("insert into JOB_BIT (tabla)values('"+current+"')");
+                pss.executeUpdate("insert into JOB_BIT (tabla)values('"+current+"')");
+                label_informacion_job.setText("job Executed!");
+
+            } catch (SQLException ex) {
+                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+            
+            
+        }   
+        /*
+        for (int i = 0; i < sqlserverShowTables.getRowCount(); i++) {
+            
+            Object valueAt = sqlserverShowTables.getValueAt(i, 0);
+            
+            if(valueAt.toString().equals("CLIENTES_NB")){
+                
+            }else{
+                System.out.println("some error here");
+            }
+            
+            
+        }*/
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void boton_recent_sqlserverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_recent_sqlserverActionPerformed
+        // TODO add your handling code here:
+        
+        textField_nombreInstancia_sqlserver.setText("sqlserverdb.cdvj4u1rep19.us-east-1.rds.amazonaws.com");
+        textField_nombreBD_sqlserver.setText("projectmysql");
+        textField_puerto_sqlserver.setText("1433");
+        textField_nombreUsuario_sqlserver.setText("admin");
+        textField_password_sqlserver.setText("adminsqlserver");
+    }//GEN-LAST:event_boton_recent_sqlserverActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        
+        
+        System.out.println(sqlserverShowTables.getRowCount());
+        
+        for (int i = 0; i < sqlserverShowTables.getRowCount(); i++) {
+            System.out.println("hola");
+        }
+        
+        
+        
+        
+        try {
+            PreparedStatement psJob = conexion_from_probar_mysql.con.prepareStatement("select max(idJOB_BIT) maximo,fecha from JOB_BIT");
+            ResultSet rsJob = psJob.executeQuery("select max(idJOB_BIT) maximo,fecha from JOB_BIT");
+
+            //obtener el log mas reciente
+            int lastLog = -4;//last log es el mayor id
+            String lastFecha = null;
+            while (rsJob.next()) {
+                lastLog= rsJob.getInt("maximo");
+                lastFecha= rsJob.getString("fecha");
+            }
+            
+            System.out.println(lastLog);
+            System.out.println(lastFecha);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        /*
+        
+        for (int i = 0; i < sqlserverShowTables.getRowCount(); i++) {// todas las tablas para replicar
+            
+            String current= sqlserverShowTables.getValueAt(i, 0).toString();
+            
+            
+            int index_of_=current.indexOf("_");
+            current=current.substring(0,index_of_);
+            System.out.println(current);
+            
+        }
+        
+        */
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
     
        
         
@@ -416,8 +906,14 @@ public class NewJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonConfiguracion;
+    private javax.swing.JButton botonReplicar;
+    private java.awt.Button boton_mover_a_tabla_sqlserver;
     private javax.swing.JButton boton_probarMysql;
     private javax.swing.JButton boton_probarSqlServer;
+    private java.awt.Button boton_quitar_de_sqlserver;
+    private javax.swing.JButton boton_recent_mysql;
+    private javax.swing.JButton boton_recent_sqlserver;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -434,7 +930,13 @@ public class NewJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JDialog jdialog_botonConfiguracion;
+    private javax.swing.JDialog jdialog_botonReplicar;
+    private javax.swing.JLabel label_informacion_job;
+    private javax.swing.JTable mysqlShowTables;
+    private javax.swing.JTable sqlserverShowTables;
     private javax.swing.JLabel textField_mostrarMnsj_afterTest_mysql;
     private javax.swing.JLabel textField_mostrarMnsj_afterTest_sqlserver;
     private javax.swing.JTextField textField_nombreBD_mysql;
