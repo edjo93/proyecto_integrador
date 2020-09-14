@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -83,12 +85,19 @@ public class NewJFrame extends javax.swing.JFrame {
         sqlserverShowTables = new javax.swing.JTable();
         boton_mover_a_tabla_sqlserver = new java.awt.Button();
         boton_quitar_de_sqlserver = new java.awt.Button();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        boton_job = new javax.swing.JButton();
         label_informacion_job = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         botonConfiguracion = new javax.swing.JButton();
         botonReplicar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+
+        jdialog_botonConfiguracion.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentHidden(java.awt.event.ComponentEvent evt) {
+                jdialog_botonConfiguracionComponentHidden(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 255));
 
@@ -351,21 +360,20 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("job");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        boton_job.setText("job");
+        boton_job.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jButton2.setText("testing sqlserver table");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                boton_jobActionPerformed(evt);
             }
         });
 
         label_informacion_job.setText("last job: ");
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        jLabel14.setText("sin replicar");
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 2, 18)); // NOI18N
+        jLabel15.setText("replicando");
 
         javax.swing.GroupLayout jdialog_botonReplicarLayout = new javax.swing.GroupLayout(jdialog_botonReplicar.getContentPane());
         jdialog_botonReplicar.getContentPane().setLayout(jdialog_botonReplicarLayout);
@@ -374,31 +382,42 @@ public class NewJFrame extends javax.swing.JFrame {
             .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
                 .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(157, 157, 157)
+                        .addComponent(boton_job))
+                    .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
+                        .addGap(157, 157, 157)
+                        .addComponent(label_informacion_job, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(91, 91, 91)
+                        .addGap(64, 64, 64)
                         .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(boton_quitar_de_sqlserver, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                             .addComponent(boton_mover_a_tabla_sqlserver, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
-                        .addGap(157, 157, 157)
-                        .addComponent(jButton1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 91, Short.MAX_VALUE)
                 .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-            .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
-                .addGap(157, 157, 157)
-                .addComponent(label_informacion_job, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdialog_botonReplicarLayout.createSequentialGroup()
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)))
+                .addGap(37, 37, 37))
         );
         jdialog_botonReplicarLayout.setVerticalGroup(
             jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
                 .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jdialog_botonReplicarLayout.createSequentialGroup()
-                        .addGap(133, 133, 133)
+                        .addGap(87, 87, 87)
+                        .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel15))
+                        .addGap(32, 32, 32)
                         .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -407,10 +426,8 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(boton_mover_a_tabla_sqlserver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(55, 55, 55)
                         .addComponent(boton_quitar_de_sqlserver, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
-                .addGroup(jdialog_botonReplicarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addComponent(boton_job)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(label_informacion_job, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
@@ -479,7 +496,8 @@ public class NewJFrame extends javax.swing.JFrame {
         jdialog_botonConfiguracion.pack();
         jdialog_botonConfiguracion.setLocationRelativeTo(this);
         
-        
+        //hide frame
+        this.setVisible(false);
         
     }//GEN-LAST:event_botonConfiguracionActionPerformed
 
@@ -587,6 +605,12 @@ public class NewJFrame extends javax.swing.JFrame {
         jdialog_botonReplicar.setVisible(true);
         jdialog_botonReplicar.pack();
         jdialog_botonReplicar.setLocationRelativeTo(this);
+        
+        //ocultar opciones del frame
+        this.setVisible(false);
+     
+        
+        
         DefaultTableModel modelo = new DefaultTableModel();
         modelo.setColumnIdentifiers(new Object[]{"Mysql tables"});
         
@@ -701,98 +725,113 @@ public class NewJFrame extends javax.swing.JFrame {
         DefaultTableModel modelo3= (DefaultTableModel)sqlserverShowTables.getModel();
         modelo3.setRowCount(0);
         
+        //pop up frame 
+        this.setVisible(true);
         
     }//GEN-LAST:event_jdialog_botonReplicarComponentHidden
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void boton_jobActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_jobActionPerformed
         
-        for (int i = 0; i < sqlserverShowTables.getRowCount(); i++) {// todas las tablas para replicar
+        //confirmar
+        int showConfirmDialog = JOptionPane.showConfirmDialog(null, "realmente quiere ejecutar el job?");
+        
+        if (showConfirmDialog==0) {//el usuario acepto
             
-            String current= sqlserverShowTables.getValueAt(i, 0).toString();
-            int index_of_=current.indexOf("_");
-            current=current.substring(0,index_of_);//obtenemos el identificador general de la tabla POR EJM: CLIENTES_BIT , CLIENTES_NB OBTENEMOS CLIENTES 
-            
-            
-            try {
-                // TODO add your handling code here:
-                //solicitar el ultimo log
-                
-                
-                //requerir conexiones
-                PreparedStatement psJob = conexion_from_probar_mysql.con.prepareStatement("select max(fecha) fechaMaxima from JOB_BIT where tabla ='"+current+"'");
-                ResultSet rsJob = psJob.executeQuery("select max(fecha) fechaMaxima from JOB_BIT where tabla ='"+current+"'");
+        
+        
+            for (int i = 0; i < sqlserverShowTables.getRowCount(); i++) {// todas las tablas para replicar
 
-                //obtener el log mas reciente
-                //obtener el log mas reciente
-                String lastFecha = null;
-                while (rsJob.next()) {
-                    lastFecha= rsJob.getString("fechaMaxima");
-                }
-                
-                
-                PreparedStatement pss;
-                ResultSet rss;
-                if (lastFecha==null) {
-                    //ejecutar replicacion desde cero
-                    pss = conexion_from_probar_mysql.con.prepareStatement("select * from "+current+"_BIT");
-                    rss = pss.executeQuery("select * from "+current+"_BIT");
-                }else{
-                    //ejecutar replicacion desde un punto de control
-                    
-                    pss = conexion_from_probar_mysql.con.prepareStatement("select * from "+current+"_BIT "+" where fecha > '"+lastFecha+"'");//solo queremos actualizar datos desde la ultima replicacion
-                    rss = pss.executeQuery("select * from "+current+"_BIT "+" where fecha > '"+lastFecha+"'");
-                    
-                }
-                
-                
-                
-
-                while (rss.next()) {
-
-                    String accion = rss.getString("accion");
-
-                    if (accion.equals("insert")) {
-                        //conexion con sql server
-                        String id=rss.getString("nuevo_id");
-                        String nombre=rss.getString("nuevo_nombre");
-                        Statement ps2 = conexion_from_probar_sqlserver.conServer.createStatement();
-
-                        ps2.executeUpdate("insert into "+current+"_NB (id,nombre) "
-                                + "values ("+id+",'"+nombre+"');");
+                String current= sqlserverShowTables.getValueAt(i, 0).toString();
+                int index_of_=current.indexOf("_");
+                current=current.substring(0,index_of_);//obtenemos el identificador general de la tabla POR EJM: CLIENTES_BIT , CLIENTES_NB OBTENEMOS CLIENTES 
 
 
+                try {
+                    // TODO add your handling code here:
+                    //solicitar el ultimo log
 
-                    }else if (accion.equals("update")){
-                        String id =rss.getString("nuevo_id");
-                        String nombre=rss.getString("nuevo_nombre");
-                        Statement ps2 = conexion_from_probar_sqlserver.conServer.createStatement();
 
-                        //update element
-                        ps2.executeUpdate("update "+current+"_NB set nombre='"+nombre+"'"+" where id="+id);
+                    //requerir conexiones
+                    PreparedStatement psJob = conexion_from_probar_mysql.con.prepareStatement("select max(fecha) fechaMaxima from JOB_BIT where tabla ='"+current+"'");
+                    ResultSet rsJob = psJob.executeQuery("select max(fecha) fechaMaxima from JOB_BIT where tabla ='"+current+"'");
 
+                    //obtener el log mas reciente
+                    //obtener el log mas reciente
+                    String lastFecha = null;
+                    while (rsJob.next()) {
+                        lastFecha= rsJob.getString("fechaMaxima");
+                    }
+
+
+                    PreparedStatement pss;
+                    ResultSet rss;
+                    if (lastFecha==null) {
+                        //ejecutar replicacion desde cero
+                        pss = conexion_from_probar_mysql.con.prepareStatement("select * from "+current+"_BIT");
+                        rss = pss.executeQuery("select * from "+current+"_BIT");
                     }else{
-                        String id =rss.getString("nuevo_id");
-                        Statement ps2 = conexion_from_probar_sqlserver.conServer.createStatement();
-                        //delete element
-                        ps2.executeUpdate("delete from "+current+"_NB where id="+id);
+                        //ejecutar replicacion desde un punto de control
+
+                        pss = conexion_from_probar_mysql.con.prepareStatement("select * from "+current+"_BIT "+" where fecha > '"+lastFecha+"'");//solo queremos actualizar datos desde la ultima replicacion
+                        rss = pss.executeQuery("select * from "+current+"_BIT "+" where fecha > '"+lastFecha+"'");
 
                     }
 
 
-                }
-                //el job se hizo correctamente
-                pss = conexion_from_probar_mysql.con.prepareStatement("insert into JOB_BIT (tabla)values('"+current+"')");
-                pss.executeUpdate("insert into JOB_BIT (tabla)values('"+current+"')");
-                label_informacion_job.setText("job Executed!");
 
-            } catch (SQLException ex) {
-                Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
-            }
+
+                    while (rss.next()) {
+
+                        String accion = rss.getString("accion");
+
+                        if (accion.equals("insert")) {
+                            //conexion con sql server
+                            String id=rss.getString("nuevo_id");
+                            String nombre=rss.getString("nuevo_nombre");
+                            Statement ps2 = conexion_from_probar_sqlserver.conServer.createStatement();
+
+                            ps2.executeUpdate("insert into "+current+"_NB (id,nombre) "
+                                    + "values ("+id+",'"+nombre+"');");
+
+
+
+                        }else if (accion.equals("update")){
+                            String id =rss.getString("nuevo_id");
+                            String nombre=rss.getString("nuevo_nombre");
+                            Statement ps2 = conexion_from_probar_sqlserver.conServer.createStatement();
+
+                            //update element
+                            ps2.executeUpdate("update "+current+"_NB set nombre='"+nombre+"'"+" where id="+id);
+
+                        }else{
+                            String id =rss.getString("nuevo_id");
+                            Statement ps2 = conexion_from_probar_sqlserver.conServer.createStatement();
+                            //delete element
+                            ps2.executeUpdate("delete from "+current+"_NB where id="+id);
+
+                        }
+
+
+                    }
+                    //el job se hizo correctamente
+                    pss = conexion_from_probar_mysql.con.prepareStatement("insert into JOB_BIT (tabla)values('"+current+"')");
+                    pss.executeUpdate("insert into JOB_BIT (tabla)values('"+current+"')");
+                    label_informacion_job.setText("job Executed!");
+
+                } catch (SQLException ex) {
+                    Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+
             
             
+        }
             
             
-        }   
+    }else{
+            JOptionPane.showMessageDialog(null, "operacion cancelada!");
+        
+    }        
         /*
         for (int i = 0; i < sqlserverShowTables.getRowCount(); i++) {
             
@@ -807,7 +846,7 @@ public class NewJFrame extends javax.swing.JFrame {
             
         }*/
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_boton_jobActionPerformed
 
     private void boton_recent_sqlserverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_boton_recent_sqlserverActionPerformed
         // TODO add your handling code here:
@@ -819,55 +858,12 @@ public class NewJFrame extends javax.swing.JFrame {
         textField_password_sqlserver.setText("adminsqlserver");
     }//GEN-LAST:event_boton_recent_sqlserverActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void jdialog_botonConfiguracionComponentHidden(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jdialog_botonConfiguracionComponentHidden
         // TODO add your handling code here:
         
-        
-        System.out.println(sqlserverShowTables.getRowCount());
-        
-        for (int i = 0; i < sqlserverShowTables.getRowCount(); i++) {
-            System.out.println("hola");
-        }
-        
-        
-        
-        
-        try {
-            PreparedStatement psJob = conexion_from_probar_mysql.con.prepareStatement("select max(idJOB_BIT) maximo,fecha from JOB_BIT");
-            ResultSet rsJob = psJob.executeQuery("select max(idJOB_BIT) maximo,fecha from JOB_BIT");
-
-            //obtener el log mas reciente
-            int lastLog = -4;//last log es el mayor id
-            String lastFecha = null;
-            while (rsJob.next()) {
-                lastLog= rsJob.getInt("maximo");
-                lastFecha= rsJob.getString("fecha");
-            }
-            
-            System.out.println(lastLog);
-            System.out.println(lastFecha);
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(NewJFrame.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        /*
-        
-        for (int i = 0; i < sqlserverShowTables.getRowCount(); i++) {// todas las tablas para replicar
-            
-            String current= sqlserverShowTables.getValueAt(i, 0).toString();
-            
-            
-            int index_of_=current.indexOf("_");
-            current=current.substring(0,index_of_);
-            System.out.println(current);
-            
-        }
-        
-        */
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+        //pop up frame
+        this.setVisible(true);
+    }//GEN-LAST:event_jdialog_botonConfiguracionComponentHidden
     
        
         
@@ -907,19 +903,20 @@ public class NewJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonConfiguracion;
     private javax.swing.JButton botonReplicar;
+    private javax.swing.JButton boton_job;
     private java.awt.Button boton_mover_a_tabla_sqlserver;
     private javax.swing.JButton boton_probarMysql;
     private javax.swing.JButton boton_probarSqlServer;
     private java.awt.Button boton_quitar_de_sqlserver;
     private javax.swing.JButton boton_recent_mysql;
     private javax.swing.JButton boton_recent_sqlserver;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
